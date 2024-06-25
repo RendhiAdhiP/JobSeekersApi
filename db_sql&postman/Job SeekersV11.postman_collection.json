@@ -1,0 +1,739 @@
+{
+	"info": {
+		"_postman_id": "6fea987b-9b06-4be7-a3fb-46b2642a9b86",
+		"name": "Job SeekersV11",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32301764"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "A1a - Login success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    pm.environment.set(\"token\", jsonData.token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A1b - Login failed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_card_number",
+									"value": "{{id_card_number}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "wrongpass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A1c - Logout success",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|PWxLReb4ZwCEt1Q7z3zuy19NV1G2PCQeko2WrtSq732af473",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/auth/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A1d - Logout failed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/auth/logout?token=",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Request Validations",
+			"item": [
+				{
+					"name": "A2a - Request validation success",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "24|udGWx30NVm36RSEjsQIDMwhmboudvSn0kNarZnuG2f2e7873",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "work_experience",
+									"value": "Web Dev ",
+									"type": "text"
+								},
+								{
+									"key": "job_category_id",
+									"value": "{{job_category_id}}",
+									"type": "text"
+								},
+								{
+									"key": "job_position",
+									"value": "Web Dev",
+									"type": "default"
+								},
+								{
+									"key": "reason_accepted",
+									"value": "Punya Pengalaman 5 tahuh",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/validations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"validations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A2b - Request validation invalid token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "work_experience",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "job_category_id",
+									"value": "{{job_category_id}}",
+									"type": "text"
+								},
+								{
+									"key": "job_position",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "reason_accepted",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/validations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"validations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get the Validation",
+			"item": [
+				{
+					"name": "A2c - Get validation success",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "24|udGWx30NVm36RSEjsQIDMwhmboudvSn0kNarZnuG2f2e7873",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/validations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"validations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A2d - Get validation invalid token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/validations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"validations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get all job vacancy by job category",
+			"item": [
+				{
+					"name": "A3a - Get all job vacancies success",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|ayvqpPXx9gW2uKRw891qq4Opod0b2MmTDwnhCi7td69f811d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/job_vacancies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"job_vacancies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A3b - Get all job vacancies invalid token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/job_vacancies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"job_vacancies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get detail job vacancy",
+			"item": [
+				{
+					"name": "A3c - Get detail job vacancy success",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|ayvqpPXx9gW2uKRw891qq4Opod0b2MmTDwnhCi7td69f811d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/job_vacancies/{{job_vacancy_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"job_vacancies",
+								"{{job_vacancy_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A3d - Get detail job vacancy invalid token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/job_vacancies/{{job_vacancy_id}}?token=",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"job_vacancies",
+								"{{job_vacancy_id}}"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Applying for jobs",
+			"item": [
+				{
+					"name": "A4a - Applying for jobs success",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|ayvqpPXx9gW2uKRw891qq4Opod0b2MmTDwnhCi7td69f811d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "vacancy_id",
+									"value": "{{job_vacancy_id}}",
+									"type": "text"
+								},
+								{
+									"key": "positions",
+									"value": "Programer Handal",
+									"type": "text"
+								},
+								{
+									"key": "notes",
+									"value": "Saya Akan Kembangkan pt bapak",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A4b - Applying for jobs invalid token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "vacancy_id",
+									"value": "{{job_vacancy_id}}",
+									"type": "text"
+								},
+								{
+									"key": "positions[]",
+									"value": "{{positions}}",
+									"type": "text"
+								},
+								{
+									"key": "notes",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/applications?token=",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A4c - If the society validation hasn’t accepted by validator",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|ayvqpPXx9gW2uKRw891qq4Opod0b2MmTDwnhCi7td69f811d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "vacancy_id",
+									"value": "{{job_vacancy_id}}",
+									"type": "text"
+								},
+								{
+									"key": "positions",
+									"value": "{{positions}}",
+									"type": "text"
+								},
+								{
+									"key": "notes",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A4d - Invalid field",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "vacancy_id",
+									"value": "{{job_vacancy_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/applications?token={{token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A4e - If 2nd apply",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "vacancy_id",
+									"value": "{{job_vacancy_id}}",
+									"type": "text"
+								},
+								{
+									"key": "positions[]",
+									"value": "{{positions}}",
+									"type": "text"
+								},
+								{
+									"key": "notes",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/applications?token={{token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get all Job Applications",
+			"item": [
+				{
+					"name": "A4f - Get all job applications success",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|ayvqpPXx9gW2uKRw891qq4Opod0b2MmTDwnhCi7td69f811d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A4g - Get all job applications invalid token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/applications?token=",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8000"
+		},
+		{
+			"key": "id_card_number",
+			"value": "20210001"
+		},
+		{
+			"key": "password",
+			"value": "121212"
+		},
+		{
+			"key": "job_category_id",
+			"value": "1"
+		},
+		{
+			"key": "job_vacancy_id",
+			"value": "16"
+		},
+		{
+			"key": "positions",
+			"value": "Senior Web Dev"
+		}
+	]
+}
