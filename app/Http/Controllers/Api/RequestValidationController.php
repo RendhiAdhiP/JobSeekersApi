@@ -19,12 +19,11 @@ class RequestValidationController extends Controller
             'reason_accepted'=>'required',
         ]);
 
-        $society = Society::where('login_tokens',$request->token)->first();
+        $society = $request->user();
         $id = $society->id;
-        // dd($request);
 
         if($validator->fails()) return response()->json([$validator->errors()],422);
-
+        // dd($society->validation()->count());
         if($society->validation()->count() > 0) return response()->json(['message'=>'validation only be once']);
 
         ModelVal::create([
@@ -41,7 +40,7 @@ class RequestValidationController extends Controller
 
     public function getValidation(Request $request){
 
-        $society = Society::where('login_tokens',$request->token)->first();
+        $society = $request->user();
 
         $validation = modelVal::where('society_id',$society->id)->with('jobCategory')->first();
 

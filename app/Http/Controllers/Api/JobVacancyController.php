@@ -15,7 +15,7 @@ class JobVacancyController extends Controller
     public function GetJob(Request $request)
     {
         $society = $request->user();
-        // dd($request->user());
+        dd($society);
         if($society->validation[0]->status != 'accepted') return response()->json(['message'=>'Your validation not yet accepted']);
 
         $vacancy = $society->validation[0]->jobCategory->jobVacancy;
